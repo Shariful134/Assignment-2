@@ -10,16 +10,25 @@ const createBookStoreDB = async (bookStore: Book) => {
 
 // Get All Books using query from mongoDB
 const getAllBooksFromDB = async (searchTerm: string) => {
-  const result = await BookModel.find();
+  let filter = {};
+  filter = {
+    $or: [
+      { title: { $regex: searchTerm } },
+      { author: { $regex: searchTerm } },
+      { category: { $regex: searchTerm } },
+    ],
+  };
+  const result = await BookModel.find(filter);
+  if (result.length === 0) throw new Error('Product is not found');
   return result;
 };
 
 // The details of a specific book by ID
 const getSpecificBooksFromDB = async (_id: string) => {
   const result = await BookModel.findOne({ _id });
-  if (!result) {
-    throw new Error('Product not found');
-  }
+  // if (!result) {
+  //   throw new Error('Product not found');
+  // }
   return result;
 };
 

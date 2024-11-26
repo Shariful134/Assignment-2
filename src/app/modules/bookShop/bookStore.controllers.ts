@@ -35,17 +35,26 @@ const getAllBooks = async (req: Request, res: Response) => {
   try {
     const searchTerm = req.query.searchTerm?.toString() || '';
     const result = await bookStoreService.getAllBooksFromDB(searchTerm);
+
     res.status(200).json({
       message: 'Books retrieved successfully',
       status: true,
       data: result,
     });
   } catch (error) {
-    res.status(500).json({
-      message: 'Books retrieved Faild',
-      status: false,
-      error: error,
-    });
+    if (error instanceof Error) {
+      res.status(404).json({
+        message: 'Validation faild',
+        status: false,
+        error: error,
+        stack: error.stack,
+      });
+    } else {
+      res.status(404).json({
+        message: 'Validation Failed',
+        status: false,
+      });
+    }
   }
 };
 
@@ -54,6 +63,13 @@ const getSpecificBooks = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
     const result = await bookStoreService.getSpecificBooksFromDB(productId);
+    if (!result) {
+      res.status(404).json({
+        message: 'Books not Found ',
+        status: false,
+        data: result,
+      });
+    }
     res.status(200).json({
       message: 'Book retrieved successfully',
       status: true,
