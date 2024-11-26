@@ -4,8 +4,9 @@ import { bookRoutes } from './app/modules/bookShop/bookStreo.routes';
 const app: Application = express();
 
 //parsers
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
+
 app.get('/', (req, res) => {
   res.send('Hello, Vercel!');
 });
