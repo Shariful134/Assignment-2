@@ -3,22 +3,19 @@ import { bookStoreController, orderController } from './bookStore.controllers';
 const router = express.Router();
 
 // will call controller function All Routes
-router.post('/api/products', bookStoreController.createBookStore);
+router.post('/products', bookStoreController.createBookStore);
 
-router.get('/api/products', bookStoreController.getAllBooks);
+router.get('/products', bookStoreController.getAllBooks);
 
-router.get('/api/products/:productId', bookStoreController.getSpecificBooks);
+router.get('/products/:productId', bookStoreController.getSpecificBooks);
 
-router.delete('/api/products/:productId', bookStoreController.deleteBooks);
+router.delete('/products/:productId', bookStoreController.deleteBooks);
 
-router.put(
-  '/api/products/:productId',
-  bookStoreController.updatePriceAndQuantitye,
-);
+router.put('/products/:productId', bookStoreController.updatePriceAndQuantitye);
 
 //Orderes Related Routes
-router.post('/api/orders', orderController.createOrder);
+router.post('/orders', orderController.createOrder);
 
-router.get('/api/orders/revenue', orderController.calculatePrice);
+router.get('/orders/revenue', orderController.calculatePrice);
 
 export const bookRoutes = router;

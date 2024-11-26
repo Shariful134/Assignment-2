@@ -6,11 +6,10 @@ const app: Application = express();
 //parsers
 app.use(cors());
 app.use(express.json());
-
+//application routes
+app.use('/api', bookRoutes);
 app.get('/', (req, res) => {
   res.send('Hello, Vercel!');
 });
-//application routes
-app.use('/', bookRoutes);
 
 export default app;
