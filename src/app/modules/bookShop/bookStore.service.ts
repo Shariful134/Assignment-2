@@ -10,17 +10,7 @@ const createBookStoreDB = async (bookStore: Book) => {
 
 // Get All Books using query from mongoDB
 const getAllBooksFromDB = async (searchTerm: string) => {
-  let filter = {};
-  if (searchTerm) {
-    filter = {
-      $or: [
-        { title: { $regex: searchTerm } }, //এখানে title হচ্ছে একটি ফিল্ড এবং $regex হচ্ছে একটি অপারেটর। এই কুয়েরি MongoDB-কে বলে যে, title ফিল্ডে এমন কোনো মান (string) রয়েছে কি যা searchTerm এর সাথে মিলবে।
-        { author: { $regex: searchTerm } },
-        { category: { $regex: searchTerm } },
-      ],
-    };
-  }
-  const result = await BookModel.find(filter);
+  const result = await BookModel.find();
   return result;
 };
 
